@@ -1,6 +1,6 @@
 # demos
 
-放個人作品用的前端 demo 頁面。每個資料夾是一個獨立的 demo，都是**單一 HTML 檔、不需要任何建置流程**，用瀏覽器直接打開就能跑。
+放個人作品用的前端 demo 頁面。每個資料夾是一個獨立的 demo，**不需要任何建置流程**，用瀏覽器直接打開就能跑。
 
 ## 資料夾
 
@@ -10,7 +10,8 @@
 
 | 檔案 | 用處 |
 |---|---|
-| `index.html` | 完整的 demo。單檔自包含，照片與地形資料都已內嵌，不需要外部資源 |
+| `index.html` | 完整的 demo。地形高程與海岸線資料已內嵌在 HTML 裡，不需要外部服務 |
+| `photos/` | 路線照片。主圖寬 1200、另附縮圖，以 `loading="lazy"` 在需要時才載入 |
 
 **畫面上有什麼**
 
@@ -21,7 +22,8 @@
 
 **資料來源**
 
-- 路線資訊與 GPS 座標：[KiwiCanyons](https://www.kiwicanyons.org/)，topo by Daniel Clearwater
+- 路線資訊與 GPS 座標：[KiwiCanyons](https://www.kiwicanyons.org/)，topo by Daniel Clearwater、Will Hamilton
+- 照片：Cross Creek 由使用者提供；Wilson Creek 來自 KiwiCanyons，拍攝者標於各圖說（Rod Sturm、Chuckys、Ira）
 - 地形高程：NASA SRTM 1 arcsec DEM（Haast Pass）與 AWS Terrarium 補洞高程（Fiordland、Waitaha）
 - 海岸線向量：[Natural Earth](https://www.naturalearthdata.com/)（公有領域）
 - **「天氣水情」分頁是示範資料，不是實際觀測值。** 正式版預計串接 NIWA 與 West Coast Regional Council 的水位／雨量 API。
