@@ -16,7 +16,7 @@
 
 - **右側面板七個分頁** — 快速資訊、時間規劃、天氣水情、進場路線、代表照片、風險注意、原始路線圖。面板左緣可以拖曳調整寬度。
 - **可縮放的地形圖** — 縮到底可以看到整個紐西蘭；拉近會接上等高線地形圖，並標出各路線的 GPS 點位（停車點、渡溪點、入溪點等），點上直接寫名稱與海拔。
-- **五條已建檔路線** — Cross Creek、Wilson Creek、Mather Creek（Haast Pass）、Whio Creek（Fiordland Tutoko valley）、Bartrum Creek（Westland Waitaha Valley）。清單裡的台灣路線是尚未建檔的佔位資料。
+- **五條已建檔路線** — Cross Creek、Wilson Creek（Haast Pass）、Whio Creek（Fiordland Tutoko valley）、Bartrum Creek（Westland Waitaha Valley）、Mather Creek（Haast Pass）。清單裡的台灣路線是尚未建檔的佔位資料。
 - **地形資料涵蓋三個區域** — Haast Pass、Tutoko / Milford、Waitaha Valley；縮到最小可看見整個紐西蘭，三個區域各以紅框標示。
 
 **資料來源**
