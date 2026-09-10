@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>demos</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<style>
+:root{
+  --ground:#070d15; --panel:#0f1825; --panel2:#152030; --line:#233347;
+  --text:#e8eff7; --muted:#93a7bd; --dim:#657a91; --water:#4ac9de; --water2:#8ee6f3;
+  --sans:"IBM Plex Sans","Noto Sans TC","PingFang TC",sans-serif;
+  --cond:"IBM Plex Sans Condensed","Noto Sans TC","PingFang TC",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);font-family:var(--sans);line-height:1.7;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:720px;margin:0 auto;padding:64px 20px 80px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+h1{font-family:var(--cond);font-weight:700;font-size:40px;line-height:1.1;margin:8px 0 12px;letter-spacing:.01em}
+.lede{color:var(--muted);font-size:15px;max-width:56ch;margin:0}
+.rule{height:1px;background:var(--line);margin:36px 0 28px}
+h2{font-size:12px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--dim);margin:0 0 14px}
+.card{display:block;text-decoration:none;color:inherit;border:1px solid var(--line);border-radius:12px;
+  background:var(--panel);padding:20px 22px;transition:border-color .15s,background .15s}
+.card:hover{border-color:#2f6d80;background:var(--panel2)}
+.card h3{font-family:var(--cond);font-weight:700;font-size:22px;margin:0 0 4px;color:var(--water2)}
+.card p{margin:0;font-size:14px;color:var(--muted)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.tag{font-family:var(--mono);font-size:11px;padding:2px 8px;border-radius:5px;background:#1c2839;color:#a9bed3}
+.meta{margin-top:14px;font-size:12.5px;color:var(--dim)}
+footer{margin-top:44px;font-size:12.5px;color:var(--dim)}
+footer a{color:var(--water)}
+@media (max-width:520px){.wrap{padding:40px 18px 60px}h1{font-size:32px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">HsuenChan / demos</p>
+  <h1>前端 demo 頁面</h1>
+  <p class="lede">每個 demo 都是單一 HTML 檔、不需要任何建置流程，點進去就能直接操作。</p>
+
+  <div class="rule"></div>
+
+  <h2>目前收錄</h2>
+  <a class="card" href="tw-canyoning-tabs/">
+    <h3>溪降路線資料庫</h3>
+    <p>三欄式介面：左側路線清單、中間可縮放的真實地形圖、右側七個分頁的路線檔案。收錄紐西蘭南島五條溪谷。</p>
+    <div class="tags">
+      <span class="tag">Canvas 地形圖</span>
+      <span class="tag">SRTM / Terrarium DEM</span>
+      <span class="tag">SVG 剖面圖</span>
+      <span class="tag">單檔自包含</span>
+    </div>
+    <p class="meta">Cross Creek · Wilson Creek · Whio Creek · Bartrum Creek · Mather Creek</p>
+  </a>
+
+  <footer>
+    原始碼與說明見 <a href="https://github.com/HsuenChan/demos">GitHub repo</a>。
+    路線資料來源為 <a href="https://www.kiwicanyons.org/">KiwiCanyons</a>，地形高程為 NASA SRTM 與 AWS Terrarium，海岸線為 Natural Earth。
+  </footer>
+</div>
+</body>
+</html>
