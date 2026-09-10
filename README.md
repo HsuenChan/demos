@@ -17,8 +17,8 @@
 
 - **右側面板七個分頁** — 快速資訊、時間規劃、天氣水情、進場路線、代表照片、風險注意、原始路線圖。面板左緣可以拖曳調整寬度。
 - **真實地圖底圖** — Leaflet + 三種可切換底圖：地形圖（OpenTopoMap，含等高線與地名）、衛星影像（Esri）、街道圖（OSM）。各路線的 GPS 點位（停車點、渡溪點、入溪點等）直接標在圖上，點上寫名稱與海拔。
-- **五條已建檔路線** — Cross Creek、Wilson Creek（Haast Pass）、Whio Creek（Fiordland Tutoko valley）、Bartrum Creek（Westland Waitaha Valley）、Mather Creek（Haast Pass）。清單裡的台灣路線是尚未建檔的佔位資料。
-- **五個區域** — Haast Pass、Tutoko / Milford、Waitaha Valley；選路線會自動縮放到該路線的座標範圍。
+- **六條路線** — Cross Creek、Wilson Creek（Haast Pass）、Whio Creek（Fiordland Tutoko valley）、Bartrum Creek（Westland Waitaha Valley）、Mather Creek（Haast Pass）、Major Mayhem（Dart Valley）。
+- **四個區域** — Haast Pass、Tutoko / Milford、Waitaha Valley、Dart Valley；選路線會自動縮放到該路線的座標範圍（Major Mayhem 的官方 topo 未提供座標，因此沒有標點）。
 
 **資料來源**
 

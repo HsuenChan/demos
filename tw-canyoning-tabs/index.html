@@ -93,7 +93,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 }
 .chip.a{background:var(--g-a)}
 .chip.r{background:var(--g-r)}
-.chip.nz{background:#31405a;color:#b9cbe4}
 .route-loc{margin-top:5px;font-size:12px;color:var(--dim)}
 .stars{display:flex;gap:1px;color:var(--sun);margin-left:2px}
 .stars .i{width:12px;height:12px}
@@ -255,6 +254,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   background:#101d29;border:1px solid var(--line);font-size:12.5px;color:var(--muted);line-height:1.65;
 }
 .note .i{width:15px;height:15px;flex:none;margin-top:2px;color:var(--water);opacity:.8}
+.note.demo{border-color:#5c4712;background:#241d09;color:#d8c99f}
+.note.demo .i{color:var(--sun);opacity:1}
+.note.demo b{color:#f7dd9a}
 
 /* bullet lists */
 .blist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
@@ -309,6 +311,11 @@ figcaption b{color:var(--muted);font-weight:500}
   background:var(--panel-2);border:1px solid var(--line-soft);border-radius:6px;padding:3px 8px;
 }
 .lg b{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--water-2)}
+.lg i.pw{width:14px;height:8px;border-radius:0 0 4px 4px;display:block;flex:none}
+.lg i.pw.u{background:#2b6f9c;border:1px solid #7cc4e8;border-top:0;height:7px}
+.lg i.pw.s{background:#2f93ad;border:1px solid #8fe4f5;border-top:0;height:6px}
+.lg i.pw.d{background:#1f5f8e;border:1px solid #63b8e6;border-top:0}
+.lg i.pw.h{background:#123a63;border:1px solid #9dbfe0;border-top:0}
 .topo-sec{display:flex;flex-direction:column;gap:6px}
 .topo-hd{display:flex;align-items:baseline;gap:8px;font-size:12.5px}
 .topo-hd .nm{font-family:var(--cond);font-weight:700;font-size:15px;letter-spacing:.02em}
@@ -557,7 +564,7 @@ a.btn{text-decoration:none;color:var(--text)}
       <input id="q" type="search" placeholder="搜尋路線或地區" autocomplete="off">
     </div>
     <div class="side-meta">
-      <span><b id="count">75</b> 條路線 · 紐西蘭南島</span>
+      <span><b id="count">6</b> 條路線 · 紐西蘭南島</span>
       <span class="sortlink">自訂順序</span>
     </div>
     <div class="routes" id="routes"></div>
@@ -588,7 +595,7 @@ a.btn{text-decoration:none;color:var(--text)}
     </div>
     <button class="pillbox sideopen" id="side-open" title="展開路線清單" hidden><svg class="i"><use href="#ic-chev"/></svg></button>
     <div class="pillbox scalebar"><span class="bar" id="sb-bar"></span><span class="lbl" id="sb-lbl"></span></div>
-    <div class="pillbox mapnote" id="mapnote" hidden>此路線尚無 GPS 座標，地圖維持在 Haast Pass 範圍</div>
+    <div class="pillbox mapnote" id="mapnote" hidden>此路線的官方 topo 未提供 GPS 座標，因此地圖上沒有標點</div>
   </div>
 
   <!-- ============ dossier ============ -->
@@ -702,6 +709,8 @@ a.btn{text-decoration:none;color:var(--text)}
       <div class="pane viz" role="tabpanel" id="s3-mather" aria-labelledby="t3" hidden>
         <div class="sec-h"><svg class="i"><use href="#ic-rain"/></svg>天氣與水情 Weather &amp; Flow</div>
 
+        <div class="note demo"><svg class="i"><use href="#ic-warn"/></svg><span><b>本頁為示範資料，非實際觀測值。</b>水位、雨量與預報數字都是為了呈現版面而編的，不可用於任何實際行程判斷。正式版預計串接 NIWA 測站與 West Coast Regional Council 的水位／雨量 API，並以 Haast River at Roaring Billy 作為替代參考站。</span></div>
+
         <div class="statband">
           <svg class="i"><use href="#ic-warn"/></svg>
           <span class="txt">
@@ -759,7 +768,6 @@ a.btn{text-decoration:none;color:var(--text)}
           <details class="tbl" data-table="rn"><summary>數值表</summary><div></div></details>
         </div>
 
-        <div class="note"><svg class="i"><use href="#ic-info"/></svg><span>本頁為 <b>示範資料</b>，非實際觀測值。正式版預計串接 NIWA 測站與 West Coast Regional Council 的水位／雨量 API，並以 Haast River at Roaring Billy 作為替代參考站。</span></div>
       </div>
 
       <!-- 4 進場路線 -->
@@ -933,13 +941,17 @@ a.btn{text-decoration:none;color:var(--text)}
         <div class="sec-h"><svg class="i"><use href="#ic-route"/></svg>原始路線圖 Original Topo</div>
         <div class="legend">
           <span class="lg"><b>R</b>垂降</span>
-          <span class="lg"><b>J</b>跳水</span>
+          <span class="lg"><b>J</b>跳水（<b>!</b>＝技術性）</span>
           <span class="lg"><b>S</b>滑瀑</span>
           <span class="lg"><b>DC</b>下攀</span>
-          <span class="lg"><b>HL</b>手拉繩</span>
+          <span class="lg"><b>HL</b>手拉繩（接近錨點用）</span>
           <span class="lg"><b>TR</b>右岸</span>
           <span class="lg"><b>TL</b>左岸</span>
-          <span class="lg"><b>XX</b>固定錨點</span>
+          <span class="lg"><b>X X</b>Bolt 錨栓</span>
+          <span class="lg"><i class="pw u"></i>落水潭（該 topo 未區分深淺）</span>
+          <span class="lg"><i class="pw s"></i>淺水潭（涉行）</span>
+          <span class="lg"><i class="pw d"></i>深潭（游泳）</span>
+          <span class="lg"><i class="pw h"></i>危險 hydraulic 潭</span>
         </div>
         <p class="src">剖面圖可左右捲動；縱向為落差比例，橫向不等比。</p>
         <div id="topo-cross"></div>
@@ -1051,13 +1063,17 @@ a.btn{text-decoration:none;color:var(--text)}
         <div class="sec-h"><svg class="i"><use href="#ic-route"/></svg>原始路線圖 Original Topo</div>
         <div class="legend">
           <span class="lg"><b>R</b>垂降</span>
-          <span class="lg"><b>J</b>跳水</span>
+          <span class="lg"><b>J</b>跳水（<b>!</b>＝技術性）</span>
           <span class="lg"><b>S</b>滑瀑</span>
           <span class="lg"><b>DC</b>下攀</span>
-          <span class="lg"><b>HL</b>手拉繩</span>
+          <span class="lg"><b>HL</b>手拉繩（接近錨點用）</span>
           <span class="lg"><b>TR</b>右岸</span>
           <span class="lg"><b>TL</b>左岸</span>
-          <span class="lg"><b>XX</b>固定錨點</span>
+          <span class="lg"><b>X X</b>Bolt 錨栓</span>
+          <span class="lg"><i class="pw u"></i>落水潭（該 topo 未區分深淺）</span>
+          <span class="lg"><i class="pw s"></i>淺水潭（涉行）</span>
+          <span class="lg"><i class="pw d"></i>深潭（游泳）</span>
+          <span class="lg"><i class="pw h"></i>危險 hydraulic 潭</span>
         </div>
         <p class="src">剖面圖可左右捲動；縱向為落差比例，橫向不等比。</p>
         <div id="topo-wilson"></div>
@@ -1171,18 +1187,19 @@ a.btn{text-decoration:none;color:var(--text)}
         <div class="sec-h"><svg class="i"><use href="#ic-route"/></svg>原始路線圖 Original Topo</div>
         <div class="legend">
           <span class="lg"><b>R</b>垂降</span>
-          <span class="lg"><b>J</b>跳水</span>
+          <span class="lg"><b>J</b>跳水（<b>!</b>＝技術性）</span>
           <span class="lg"><b>S</b>滑瀑</span>
           <span class="lg"><b>DC</b>下攀</span>
-          <span class="lg"><b>HL</b>手拉繩</span>
+          <span class="lg"><b>HL</b>手拉繩（接近錨點用）</span>
           <span class="lg"><b>TR</b>右岸</span>
           <span class="lg"><b>TL</b>左岸</span>
-          <span class="lg"><b>XX</b>固定錨點</span>
+          <span class="lg"><b>X X</b>Bolt 錨栓</span>
+          <span class="lg"><i class="pw u"></i>落水潭（該 topo 未區分深淺）</span>
         </div>
         <p class="src">剖面圖可左右捲動；縱向為落差比例，橫向不等比。</p>
         <div id="topo-whio"></div>
         <a class="btn" href="https://www.kiwicanyons.org/wp-content/uploads/2024/01/Whio-Creek-Canyo-topo.pdf" target="_blank" rel="noopener"><svg class="i"><use href="#ic-ext"/></svg>官方 topo PDF</a>
-        <p class="src">縱剖面依官方 topo 的落差與順序簡化重繪。原始 topo 為手繪：KiwiCanyons — Whio Creek Canyon topo by Will Hamilton，2024/01。</p>
+        <p class="src">縱剖面依官方 topo 的落差與順序簡化重繪。原始 topo 為<b>手繪</b>且所有落水潭同色，<b>未區分深淺</b>，因此這裡一律標為未區分。原始 topo：KiwiCanyons — Whio Creek Canyon topo by Will Hamilton，2024/01。</p>
       </div>
       </div>
 
@@ -1302,6 +1319,139 @@ a.btn{text-decoration:none;color:var(--text)}
       </div>
       </div>
 
+      <div class="rpanes" data-route="mayhem" hidden>
+      <div class="pane" role="tabpanel" id="s1-mayhem" aria-labelledby="t1">
+        <div class="sec-h"><svg class="i"><use href="#ic-info"/></svg>快速資訊 Quick Info</div>
+        <dl class="rows">
+          <div class="row"><dt><svg class="i"><use href="#ic-pin"/></svg>地點</dt>
+            <dd>Dart Valley（Aspiring 區，Glenorchy 以北）<br><span class="en">官方 Location 欄僅寫 Dart Valley</span></dd></div>
+          <div class="row"><dt><svg class="i"><use href="#ic-trail"/></svg>主要進場</dt>
+            <dd class="flow">Dart Valley 路末端倒數第二個涉水點（Dan&#39;s Paddock 之後）停車 <span class="arrow">→</span> <b>上段</b>：沿溪左岸上行，1000 m 等高線過支流（北岸轉南岸），續行超過樹線至 <span class="num">1400 m</span> 入溪 <span class="arrow">／</span> <b>下段</b>：沿溪右岸上行，於 800 m 等高線由碎石坡下切至 760 m 溪床，或沿 600 m 等高線到「The Happy Place」上方平台下切</dd></div>
+          <div class="row"><dt><svg class="i"><use href="#ic-grade"/></svg>分級</dt>
+            <dd><span class="num">v5a3IV</span> <span class="stars" data-stars></span><br><span class="en">v5 垂直技術 · a3 水流難度</span><br><span class="en">IV Commitment/Duration：1 hr 內可脫離洪水、撤退最多 2 hr、總時 8 hr–1 天</span></dd></div>
+          <div class="row"><dt><svg class="i"><use href="#ic-mountain"/></svg>性質</dt>
+            <dd>上段是大而暴露的瀑布，下段是連綿不斷的水性窄縫峽谷；大量脆弱的倒木堆<br><span class="en">全線 R1–R41，入溪 1400 m、出溪 460 m</span></dd></div>
+          <div class="row"><dt><svg class="i"><use href="#ic-canyon"/></svg>岩質</dt>
+            <dd>Schist<br><span class="en">官方原文寫 “Schist (I guess)”</span></dd></div>
+          <div class="row"><dt><svg class="i"><use href="#ic-drop"/></svg>集水區</dt><dd class="num">2.2 km²</dd></div>
+          <div class="row"><dt><svg class="i"><use href="#ic-rope"/></svg>繩索</dt>
+            <dd><span class="num">2 × 60 m</span><br><span class="en">最高落差 R8 60 m（Money Shot Falls，R8 60 m + R9 35 m 合計 95 m）· 大隊伍需額外繩索，因為該序列有懸吊確保站</span></dd></div>
+          <div class="row"><dt><svg class="i"><use href="#ic-rope"/></svg>錨點</dt>
+            <dd>多為 bolt，較開闊段落偶有自然錨點<br><span class="en">行程紀錄提到部分為單顆 bolt、有些遺失，鍍鋅件有腐蝕</span></dd></div>
+          <div class="row"><dt><svg class="i"><use href="#ic-drop"/></svg>水量</dt>
+            <dd>Medium to Low Flow<br><span class="en">460 m 等高線有水位檢查點，官方附對照照片</span></dd></div>
+          <div class="row"><dt><svg class="i"><use href="#ic-pin"/></svg>GPS</dt>
+            <dd>—<br><span class="en">官方 topo 未提供座標，僅以等高線標示入溪（1400／800／600 m）與出溪（460 m）</span></dd></div>
+          <div class="row"><dt><svg class="i"><use href="#ic-flag"/></svg>首降</dt>
+            <dd>下段（760 m 至出溪）2016/01：Greg Tilden、Joe Bugden<br><span class="en">上段（1400 m 至下段）2018/02：Greg Tilden、Canyoning Bob、Kaden Anderson、Taylor Redd、Joe Bugden</span></dd></div>
+        </dl>
+        <p class="src">資料來源：KiwiCanyons — Major Mayhem topo by Joe Bugden（圖幅 CA10 Lake Williamson）；分級定義見 KiwiCanyons Grading。</p>
+      </div>
+
+      <div class="pane" role="tabpanel" id="s2-mayhem" aria-labelledby="t2" hidden>
+        <div class="sec-h"><svg class="i"><use href="#ic-clock"/></svg>時間規劃 Time / Expedition Plan</div>
+        <div class="kv"><span class="k o">上段</span><span class="v">從 1400 m 入溪走完全程</span></div>
+        <div class="timegrid">
+          <div class="tcard"><svg class="i"><use href="#ic-trail"/></svg><span class="lbl">Vehicle park to start of canyon</span><span class="val">3–4 hr</span></div>
+          <div class="tcard"><svg class="i"><use href="#ic-canyon"/></svg><span class="lbl">Canyon descent</span><span class="val">8–10 hr</span></div>
+          <div class="tcard"><svg class="i"><use href="#ic-route"/></svg><span class="lbl">Return to vehicle</span><span class="val">10–15 min</span></div>
+          <div class="tcard total"><svg class="i"><use href="#ic-clock"/></svg><span class="lbl">Total</span><span class="val">11–14 hr</span></div>
+        </div>
+        <div class="kv" style="margin-top:4px"><span class="k b">下段</span><span class="v">從 760 m 或 600 m 入溪走完全程</span></div>
+        <div class="timegrid">
+          <div class="tcard"><svg class="i"><use href="#ic-trail"/></svg><span class="lbl">Vehicle park to start of canyon</span><span class="val">1–1.5 hr</span></div>
+          <div class="tcard"><svg class="i"><use href="#ic-canyon"/></svg><span class="lbl">Canyon descent</span><span class="val">4–6 hr</span></div>
+          <div class="tcard"><svg class="i"><use href="#ic-route"/></svg><span class="lbl">Return to vehicle</span><span class="val">10–15 min</span></div>
+          <div class="tcard total"><svg class="i"><use href="#ic-clock"/></svg><span class="lbl">Total</span><span class="val">5–7.5 hr</span></div>
+        </div>
+        <div class="note"><svg class="i"><use href="#ic-info"/></svg><span>官方路線頁把總時寫成 <b>5–14 hr</b>，差別就在於從上段還是下段起走。下段可以完全避開上段的大瀑布序列。</span></div>
+      </div>
+
+      <div class="pane" role="tabpanel" id="s3-mayhem" aria-labelledby="t3" hidden>
+        <div class="sec-h"><svg class="i"><use href="#ic-rain"/></svg>天氣與水情 Weather &amp; Flow</div>
+        <div class="empty">
+          <svg class="i big"><use href="#ic-rain"/></svg>
+          <h3>尚無水情資料</h3>
+          <p>官方在 <b>460 m 等高線</b>的溪床設了水位檢查點並附對照照片；上行途中經過時就該比對，水位有疑慮就不要進去。下段是持續性窄縫，高水位時危險潛勢很高。</p>
+          <a class="btn" href="https://www.kiwicanyons.org/wp-content/uploads/2018/05/Major-Mayhem-v5a3IV.pdf" target="_blank" rel="noopener"><svg class="i"><use href="#ic-ext"/></svg>官方 topo PDF（含水位對照照片）</a>
+        </div>
+      </div>
+
+      <div class="pane" role="tabpanel" id="s4-mayhem" aria-labelledby="t4" hidden>
+        <div class="sec-h"><svg class="i"><use href="#ic-trail"/></svg>進場路線與地理位置 Approach</div>
+        <div class="sec-h"><svg class="i"><use href="#ic-route"/></svg>開車</div>
+        <ol class="steps">
+          <li><span class="n">1</span><p>從 Glenorchy 出發約 25 分鐘，Paradise 之後路面轉為礫石並要過數個涉水點；正常天候下 2WD 可通行。</p></li>
+          <li><span class="n">2</span><p>開到 Dart Valley 路末端<b>倒數第二個</b>涉水點（Dan&#39;s Paddock 之後），停在涉水點對側泥土路右邊，停車位有限。</p></li>
+          <li><span class="n">3</span><p>Dart Valley 路末端（再過 10 分鐘）有 DOC 廁所。</p></li>
+        </ol>
+        <div class="sec-h"><svg class="i"><use href="#ic-trail"/></svg>上段（1400 m 入溪）</div>
+        <ol class="steps">
+          <li><span class="n">1</span><p>從停車處沿溪的<b>左岸</b>（面向上游）上行，盡量靠近溪流。</p></li>
+          <li><span class="n">2</span><p>水位有疑慮時，在 460 m 等高線的溪床停下來與官方對照照片比對。</p></li>
+          <li><span class="n">3</span><p>續行至一條支流，於 <b>1000 m 等高線</b>由北岸過到南岸；這條支流在該點上下都變得很陡。</p></li>
+          <li><span class="n">4</span><p>繼續上行穿過樹線，進入草叢（tussock）地形直到 <b>1400 m 等高線</b>，即為峽谷起點。</p></li>
+        </ol>
+        <div class="sec-h"><svg class="i"><use href="#ic-trail"/></svg>下段（760 m 或 600 m 入溪）</div>
+        <ol class="steps">
+          <li><span class="n">1</span><p>從停車處沿溪的<b>右岸</b>（面向上游）上行，同樣在 460 m 比對水位。</p></li>
+          <li><span class="n">2</span><p>穿越無路徑的原始林地爬升到想要的高度。</p></li>
+          <li><span class="n">3</span><p><b>800 m 入口</b>：由碎石坡下切至 760 m 的溪床。</p></li>
+          <li><span class="n">4</span><p><b>600 m 入口</b>：沿 600 m 等高線走到「The Happy Place」上方的平台再下切，這條比較輕鬆。</p></li>
+        </ol>
+        <div class="note"><svg class="i"><use href="#ic-info"/></svg><span>官方 topo 未提供任何 GPS 座標，全部以等高線與地形特徵描述，所以地圖上沒有標點。</span></div>
+      </div>
+
+      <div class="pane" role="tabpanel" id="s5-mayhem" aria-labelledby="t5" hidden>
+        <div class="sec-h"><svg class="i"><use href="#ic-cam"/></svg>代表照片 Representative Photo</div>
+        <div class="empty">
+          <svg class="i big"><use href="#ic-cam"/></svg>
+          <h3>未收錄照片</h3>
+          <p>官方 topo PDF 第 6 頁有下段的實拍照與出溪處水位檢查點的對照照片（攝影：Joe Bugden 等）。因為本專案是公開 repo，這裡不轉載。</p>
+          <a class="btn" href="https://www.kiwicanyons.org/wp-content/uploads/2018/05/Major-Mayhem-v5a3IV.pdf" target="_blank" rel="noopener"><svg class="i"><use href="#ic-ext"/></svg>官方 topo PDF（含照片）</a>
+        </div>
+      </div>
+
+      <div class="pane" role="tabpanel" id="s6-mayhem" aria-labelledby="t6" hidden>
+        <div class="sec-h"><svg class="i"><use href="#ic-warn"/></svg>風險與重要注意事項 Risk / Key Notes</div>
+        <div class="riskbar">
+          <svg class="i"><use href="#ic-warn"/></svg>
+          <span class="lbl">下段窄縫（R25 起）</span>
+          <span class="val">倒木壩／假底</span>
+        </div>
+        <ul class="blist risk">
+          <li>下段是持續性的窄縫峽谷，高水位或天候不佳時「危險潛勢很高」。</li>
+          <li>逃生點：上段有數個選項（標在 topo 上），<b>下段窄縫選項有限</b>；R25 進入「4th Chamber」後直到「The Happy Place」都無法脫離。</li>
+          <li><b>倒木壩與假底</b>：窄縫太窄，長年沖入的倒木卡住形成壩體，後方淤積礫石造成假的溪床底部。幾乎每個瀑布底下都有一個。</li>
+          <li>假底高度會隨時間改變，可能讓已架設的 bolt 錨點變得<b>無法到達</b>；而窄縫裡幾乎沒有自然錨點可替代。</li>
+          <li>假底一旦崩塌會釋放後方積水，<b>造成人為洪水</b>，並可能連鎖引發下游倒木堆崩塌。</li>
+          <li>官方要求下段隊伍<b>攜帶足夠的錨點材料</b>以應變；通過倒木堆時記住那句 “walking on egg shells”。</li>
+          <li>R8 頂端的懸垂處有<b>落石</b>，官方以落石符號特別標示。</li>
+          <li>R9 的錨點是懸吊確保站，位於 R8 錨點<b>下方 60 m</b>；官方以雙驚嘆號警告「務必不要垂降超出繩尾」。</li>
+          <li>R22 是多層瀑布垂降，收繩時要注意勾纏。</li>
+          <li>錨點多為單顆 bolt；行程紀錄提到有些已遺失、鍍鋅件有腐蝕。</li>
+        </ul>
+      </div>
+
+      <div class="pane" role="tabpanel" id="s7-mayhem" aria-labelledby="t7" hidden>
+        <div class="sec-h"><svg class="i"><use href="#ic-route"/></svg>原始路線圖 Original Topo</div>
+        <div class="legend">
+          <span class="lg"><b>R</b>垂降</span>
+          <span class="lg"><b>DC</b>下攀</span>
+          <span class="lg"><b>HL</b>手拉繩</span>
+          <span class="lg"><b>CL</b>左岸</span>
+          <span class="lg"><b>CR</b>右岸</span>
+          <span class="lg"><b>C</b>中央</span>
+          <span class="lg"><b>Dev</b>偏移錨點</span>
+          <span class="lg"><i class="pw u"></i>落水潭（該 topo 未區分深淺）</span>
+        </div>
+        <p class="src">這條的官方 topo 自帶圖例，錨點用紅 ✗（單顆）／✗✗（雙顆）／綠 ✗（手拉繩）／紫 ✗（偏移），並以 CL／C／CR 標示左岸／中央／右岸。剖面圖可左右捲動；縱向為落差比例，橫向不等比。</p>
+        <div id="topo-mayhem"></div>
+        <a class="btn" href="https://www.kiwicanyons.org/wp-content/uploads/2018/05/Major-Mayhem-v5a3IV.pdf" target="_blank" rel="noopener"><svg class="i"><use href="#ic-ext"/></svg>官方 topo PDF（6 頁）</a>
+        <p class="src">縱剖面依官方 topo 的落差與順序簡化重繪，逃生點與地形細節請見原圖。原始 topo：KiwiCanyons — Major Mayhem topo by Joe Bugden，2018/05。</p>
+      </div>
+      </div>
+
     </div>
   </section>
 </div>
@@ -1325,24 +1475,18 @@ $$(".stars").forEach(s=>s.innerHTML=starRow(3));
 
 /* ---------------- route list ---------------- */
 const ROUTES=[
-  {id:"cross",nm:"Cross Creek",fall:"最高落差 22m",g:["v3","a2","II"],st:3,loc:"紐西蘭 Haast Pass",nz:true,
+  {id:"cross",nm:"Cross Creek",fall:"最高落差 22m",g:["v3","a2","II"],st:3,loc:"紐西蘭 Haast Pass",
    code:"v3a2II",eyebrow:"HAAST PASS / ASPIRING · NZ",sub:"Jump / Slide Canyon"},
-  {id:"wilson",nm:"Wilson Creek",fall:"最高落差 17m",g:["v4","a5","IV"],st:3,loc:"紐西蘭 Haast Pass",nz:true,
+  {id:"wilson",nm:"Wilson Creek",fall:"最高落差 17m",g:["v4","a5","IV"],st:3,loc:"紐西蘭 Haast Pass",
    code:"v4a5IV",eyebrow:"HAAST PASS / ASPIRING · NZ",sub:"Deep Schist Slot Canyon"},
-  {id:"whio",nm:"Whio Creek",fall:"最高落差 20m",g:["v4","a4","III"],st:3,loc:"紐西蘭 Fiordland",nz:true,
+  {id:"whio",nm:"Whio Creek",fall:"最高落差 20m",g:["v4","a4","III"],st:3,loc:"紐西蘭 Fiordland",
    code:"v4a4III",eyebrow:"MILFORD / TUTOKO · FIORDLAND",sub:"Granite Pothole Canyon"},
-  {id:"bartrum",nm:"Bartrum Creek",fall:"最高落差 16m",g:["v4","a4","IV"],st:3,loc:"紐西蘭 Waitaha Valley",nz:true,
+  {id:"bartrum",nm:"Bartrum Creek",fall:"最高落差 16m",g:["v4","a4","IV"],st:3,loc:"紐西蘭 Waitaha Valley",
    code:"v4a4IV",eyebrow:"WAITAHA VALLEY · WESTLAND",sub:"Schist Amphitheatre Canyon"},
-  {id:"mather",nm:"Mather Creek",fall:"最高落差 28m",g:["v4","a4","III"],st:3,loc:"紐西蘭 Haast Pass",nz:true,
+  {id:"mather",nm:"Mather Creek",fall:"最高落差 28m",g:["v4","a4","III"],st:3,loc:"紐西蘭 Haast Pass",
    code:"v4a4III",eyebrow:"HAAST PASS / ASPIRING · NZ",sub:"Varied Jump / Slide / Rappel Canyon"},
-  {id:"jiadong",nm:"茄苳瀑布",fall:"瀑高 20m",g:["V2","A2","I"],st:0,loc:"新北 汐止"},
-  {id:"niuping",nm:"牛坪坑",fall:"瀑高 17m",g:["V2","A2","III"],st:0,loc:"台中 和平"},
-  {id:"canglong",nm:"藏龍峽谷",fall:"瀑高 30m",g:["V2","A2","III"],st:0,loc:"新北 瑞芳"},
-  {id:"kanggao",nm:"康誥坑溪 秀峰瀑布",fall:"瀑高 30m",g:["V2","A3","II"],st:0,loc:"新北 汐止"},
-  {id:"tibilun",nm:"帖比倫溪",fall:"瀑高 15m",g:["V2","A4","II"],st:3,loc:"南投 仁愛"},
-  {id:"meiya",nm:"美雅溪 涵洞瀑布",fall:"瀑高 25m",g:["V3","A1","II"],st:0,loc:"花蓮 秀林"},
-  {id:"hapen",nm:"哈盆溪 露門古道",fall:"瀑高 18m",g:["V3","A2","III"],st:0,loc:"宜蘭 員山"},
-  {id:"shiba",nm:"十八重溪",fall:"瀑高 12m",g:["V2","A1","I"],st:0,loc:"台南 東山"}
+  {id:"mayhem",nm:"Major Mayhem",fall:"最高落差 60m",g:["v5","a3","IV"],st:3,loc:"紐西蘭 Dart Valley",
+   code:"v5a3IV",eyebrow:"DART VALLEY · ASPIRING",sub:"Big Falls + Relentless Slot Canyon"}
 ];
 const CLS=["","a","r"];
 function renderList(filter){
@@ -1358,27 +1502,17 @@ function renderList(filter){
       '<span class="route-fall">'+r.fall.replace(/([\d.]+m)/,'<b>$1</b>')+'</span></span>'+
       '<span class="chips">'+r.g.map((g,i)=>'<span class="chip '+CLS[i]+'">'+g+'</span>').join("")+
       (r.st?'<span class="stars">'+starRow(r.st)+'</span>':"")+
-      (r.nz?'<span class="chip nz">NZ</span>':"")+'</span>'+
+      '</span>'+
       '<span class="route-loc">'+r.loc+'</span>';
     b.addEventListener("click",()=>select(r.id));
     box.appendChild(b);
   });
-  $("#count").textContent=f?list.length:75;
+  $("#count").textContent=list.length;
 }
 
 /* ---------------- panel state ---------------- */
 let current="cross";
 const panel=$("#panel"), panes=$("#panes"), tabwrap=$(".tabwrap");
-const emptyBox=document.createElement("div");
-emptyBox.className="panes"; emptyBox.hidden=true;
-emptyBox.innerHTML=
-  '<div class="empty">'+
-  '<svg class="i big"><use href="#ic-map"/></svg>'+
-  '<h3>這條路線尚未建檔</h3>'+
-  '<p>七頁式路線檔案目前只完成 <b>Mather Creek</b>。其他路線仍是舊版單頁資料，等資料補齊後會轉成同一套格式。</p>'+
-  '<button class="btn" id="back"><svg class="i"><use href="#ic-chev"/></svg>回到 Mather Creek</button></div>';
-panel.appendChild(emptyBox);
-emptyBox.querySelector("#back").addEventListener("click",()=>select("mather"));
 
 function select(id){
   current=id;
@@ -1393,13 +1527,12 @@ function select(id){
     (r.st?'<span class="stars">'+starRow(r.st)+'</span>':"");
   const group=$('.rpanes[data-route="'+id+'"]');
   $$(".rpanes").forEach(g=>{g.hidden=g!==group});
-  const full=!!group, hasGeo=!!GEO[id];
+  const hasGeo=!!GEO[id];
   $("#mapnote").hidden=hasGeo;
   renderMarkers();
   $("#lmap").classList.toggle("hide-wp",!$("#opt-wp").checked);
   if(hasGeo)fitRoute(id);
-  tabwrap.hidden=!full; panes.hidden=!full; emptyBox.hidden=full;
-  if(full){
+  {
     const ps0=group.querySelectorAll(".pane");
     tabs.forEach((t,j)=>{if(ps0[j])t.setAttribute("aria-controls",ps0[j].id)});
     activate(0);
@@ -1467,7 +1600,8 @@ const SRC={
   cross:"KiwiCanyons — Cross Creek topo（2022）地圖標註",
   wilson:"KiwiCanyons — Wilson Creek topo 地圖標註",
   whio:"KiwiCanyons — Whio Creek Canyon topo by Will Hamilton",
-  bartrum:"KiwiCanyons — Guide to the Waitaha Valley Canyons（2025/02/11）"
+  bartrum:"KiwiCanyons — Guide to the Waitaha Valley Canyons（2025/02/11）",
+  mayhem:"KiwiCanyons — Major Mayhem topo by Joe Bugden"
 };
 const GEO={
   mather:[
@@ -1584,57 +1718,63 @@ $("#z-fit").addEventListener("click",()=>fitRoute(current));
 const MATHER_TOPO=[
   {nm:"入溪 → A",ab:["","A"],desc:"入溪即是 DC 15 m，接連續小落差、滑瀑與兩個小跳水。",f:[
     {k:"DC",l:"DC 15m",d:15,an:"TR"},
-    {k:"R",l:"R1 16m",d:16,pool:1,an:"TR 樹錨"},
-    {k:"R",l:"R2 9m",d:9,pool:1,an:"TR XX"},
-    {k:"J",l:"J 3m!",d:3,pool:1,an:"DC TR"},
-    {k:"S",l:"S/J 6m",d:6,pool:1,an:"DC TR"},
+    {k:"R",l:"R1 16m",d:16,pool:"s",an:"TR 樹錨"},
+    {k:"R",l:"R2 9m",d:9,pool:"d",an:"TR XX"},
+    {k:"J",l:"J 3m!",d:3,pool:"s",an:"DC TR"},
+    {k:"S",l:"S/J 6m",d:6,pool:"d",an:"DC TR"},
     {k:"DC",l:"DC",d:3},
-    {k:"S",l:"S 5m",d:5,pool:1},
-    {k:"J",l:"J 1m",d:1,pool:1},
-    {k:"J",l:"J 1m",d:1,pool:1}
+    {k:"S",l:"S 5m",d:5,pool:"d"},
+    {k:"J",l:"J 1m",d:1,pool:"s"},
+    {k:"J",l:"J 1m",d:1,pool:"d"}
   ]},
   {nm:"A → B（上段結束）",ab:["A","B"],desc:"上段後半，垂降與手拉繩交錯，R6a 27 m 是全線最大落差。",f:[
     {k:"DC",l:"DC 5m",d:5},
-    {k:"R",l:"R3 12m",d:12,pool:1,an:"TR XX"},
+    {k:"R",l:"R3 12m",d:12,pool:"d",an:"TR XX"},
     {k:"HL",l:"HL 5m",d:0,an:"XX · TR XX"},
-    {k:"R",l:"R4 10m",d:10,pool:1},
+    {k:"R",l:"R4 10m",d:10,pool:"s"},
     {k:"HL",l:"HL 5m",d:0,an:"TL XX · XX"},
-    {k:"R",l:"R5 16m",d:16,pool:1},
+    {k:"R",l:"R5 16m",d:16,pool:"d"},
     {k:"J",l:"J 3m",d:3},
     {k:"HL",l:"HL 12m",d:0,an:"TL XX · TL XX"},
-    {k:"R",l:"R6a 27m",d:27,pool:1},
-    {k:"R",l:"R6b 6m",d:6,pool:1,an:"XX"},
-    {k:"R",l:"R7 12m",d:12,pool:1,an:"TR XX"}
+    {k:"R",l:"R6a 27m",d:27,pool:"d"},
+    {k:"R",l:"R6b 6m",d:6,pool:"d",an:"XX"},
+    {k:"R",l:"R7 12m",d:12,pool:"s",an:"TR XX"}
   ]},
   {nm:"B → C（中段）",ab:["B","C"],desc:"由 DC 50 m! 開始，較開闊、downclimb 很多，中途穿越 volcanic rock dyke 並有 Baker Creek 匯入。",f:[
     {k:"DC",l:"DC 50m!",d:50},
-    {k:"J",l:"J 2m",d:2,pool:1},
+    {k:"J",l:"J 2m",d:2,pool:"d"},
     {k:"DC",l:"DC 4m",d:4},
-    {k:"J",l:"J 14m",d:14,pool:1,an:"TR XX"},
-    {k:"R",l:"R8 12m",d:12,pool:1},
+    {k:"J",l:"J 14m",d:14,pool:"d",an:"TR XX"},
+    {k:"R",l:"R8 12m",d:12,pool:"d"},
     {k:"N",l:"Volcanic rock dyke"},
-    {k:"R",l:"R9 17m",d:17,pool:1,an:"TL XX"},
+    {k:"R",l:"R9 17m",d:17,pool:"s",an:"TL XX"},
     {k:"N",l:"Baker Creek 匯入"},
-    {k:"DC",l:"DC 4m!",d:4,pool:1,an:"TR XX"},
-    {k:"R",l:"R10a 10m",d:10,pool:1},
-    {k:"R",l:"R10b 10m",d:10,pool:1,an:"TR XX"},
-    {k:"R",l:"R11 12m",d:12,pool:1,an:"TR XX"},
-    {k:"R",l:"R12 15m",d:15,pool:1,an:"TR XX"},
+    {k:"DC",l:"DC 4m!",d:4,pool:"d",an:"TR XX"},
+    {k:"R",l:"R10a 10m",d:10,pool:"s"},
+    {k:"R",l:"R10b 10m",d:10,pool:"s",an:"TR XX"},
+    {k:"R",l:"R11 12m",d:12,pool:"s",an:"TR XX"},
+    {k:"R",l:"R12 15m",d:15,pool:"d",an:"TR XX"},
     {k:"HL",l:"HL 5m",d:0,an:"TR"},
-    {k:"J",l:"J 13m!!",d:13,pool:1,an:"XX"},
-    {k:"R",l:"R13 12m",d:12,pool:1},
+    {k:"J",l:"J 13m!!",d:13,an:"XX"},
+    {k:"R",l:"R13 12m",d:12,pool:"d"},
     {k:"DC",l:"DC 4m",d:4}
   ]},
   {nm:"C → 出溪（下段）",ab:["C",""],desc:"下段收窄，R17! 18 m 之後接 R18 與 The Arch 尾臼，出溪處為乾河床。",f:[
-    {k:"R",l:"R14 5m",d:5,pool:1,an:"TR XX"},
-    {k:"R",l:"R15 8m",d:8,pool:1,an:"TR XX"},
-    {k:"R",l:"R16 8m",d:8,pool:1,an:"TR XX"},
-    {k:"R",l:"R17! 18m",d:18,pool:1,an:"TL XX"},
-    {k:"R",l:"J 或 R18 16m",d:16,pool:1,an:"TL XX · XX TR"},
-    {k:"J",l:"J 6m",d:6,pool:1},
+    {k:"R",l:"R14 5m",d:5,pool:"d",an:"TR XX"},
+    {k:"R",l:"R15 8m",d:8,pool:"d",an:"TR XX"},
+    {k:"R",l:"R16 8m",d:8,pool:"d",an:"TR XX"},
+    {k:"R",l:"R17! 18m",d:18,pool:"d",an:"TL XX"},
+    {k:"R",l:"J 或 R18 16m",d:16,pool:"d",an:"TL XX · XX TR"},
+    {k:"J",l:"J 6m",d:6,pool:"d"},
     {k:"N",l:"\u201cThe Arch\u201d"}
   ]}
 ];
+const POOL={
+  u:{fill:"#2b6f9c",stroke:"#7cc4e8",h:6},
+  s:{fill:"#2f93ad",stroke:"#8fe4f5",h:4},
+  d:{fill:"#1f5f8e",stroke:"#63b8e6",h:7},
+  h:{fill:"#123a63",stroke:"#9dbfe0",h:7,swirl:true}
+};
 const SC=1.15, PADT=70, PADB=28, PADX=26;
 const DROPW={R:7,J:4,S:0,DC:0,HL:13,N:0};
 const RUNW ={R:46,J:40,S:26,DC:26,HL:30,N:66};
@@ -1668,11 +1808,19 @@ function renderTopo(sel,secs){
 
     /* pools */
     t.items.forEach(it=>{
-      if(!it.f.pool)return;
-      const pw=Math.min(30,(it.x2-it.x1)-6)*(typeof it.f.pool==="number"?it.f.pool:1);
+      const p=it.f.pool; if(!p)return;
+      const st=POOL[typeof p==="string"?p:"u"]||POOL.u;
+      const pw=Math.min(30,(it.x2-it.x1)-6)*(it.f.pw||1);
       if(pw<3)return;
-      svg.appendChild(el("path",{d:"M"+it.x1+" "+it.y1+" h"+pw+" v6 a3 3 0 0 1-3 3 h-"+(pw-6)+" a3 3 0 0 1-3-3 z",
-        fill:"#1f5f8e",stroke:"#63b8e6","stroke-width":".9"}));
+      const h=st.h;
+      svg.appendChild(el("path",{d:"M"+it.x1+" "+it.y1+" h"+pw+" v"+h+" a3 3 0 0 1-3 3 h-"+(pw-6)+" a3 3 0 0 1-3-3 z",
+        fill:st.fill,stroke:st.stroke,"stroke-width":".9"}));
+      if(st.swirl&&pw>=12){
+        const cx=it.x1+pw/2, cy=it.y1+h/2+1;
+        svg.appendChild(el("path",{d:"M"+(cx-3.4)+" "+(cy+1.2)+"a3.4 3.4 0 1 1 3.4 3.4",
+          fill:"none",stroke:"#fff","stroke-width":"1.15","stroke-linecap":"round"}));
+        svg.appendChild(el("path",{d:"M"+(cx+.2)+" "+(cy+2.6)+"l2.4 2.1 -2.9 1.1z",fill:"#fff"}));
+      }
     });
     /* stream bed */
     svg.appendChild(el("polyline",{points:t.pts.map(p=>p[0]+","+p[1]).join(" "),
@@ -1932,89 +2080,181 @@ function renderGalleries(){
 
 const CROSS_TOPO=[
   {nm:"Upper section",ab:["","A"],desc:"入溪隨即是全線最大的 R1 22 m，接三個短垂降後抵達中段起點。上段完全無法脫離。",f:[
-    {k:"R",l:"R1 22m",d:22,pool:1,an:"TL XX"},
-    {k:"R",l:"R2 3m",d:3,pool:1,an:"TR XX"},
-    {k:"R",l:"R3 4m",d:4,pool:1,an:"TR XX"},
-    {k:"R",l:"R4 4m",d:4,pool:1,an:"TL X"},
-    {k:"DC",l:"DC TL 或 S 2m",d:2,pool:1}
+    {k:"R",l:"R1 22m",d:22,pool:"s",an:"TL XX"},
+    {k:"R",l:"R2 3m",d:3,pool:"d",an:"TR XX"},
+    {k:"R",l:"R3 4m",d:4,pool:"d",an:"TR XX"},
+    {k:"R",l:"R4 4m",d:4,pool:"s",an:"TL X"},
+    {k:"DC",l:"DC TL 或 S 2m",d:2,pool:"s"}
   ]},
   {nm:"Middle section",ab:["A","C"],desc:"最長的一段，跳水、滑瀑與垂降交錯，中途有 Arch 與適合午餐的平台。",f:[
     {k:"DC",l:"DC 2m",d:2,an:"TL X"},
-    {k:"J",l:"J 2m",d:2,pool:1},
-    {k:"R",l:"R5 9m",d:9,pool:1,an:"TR XX"},
-    {k:"R",l:"R6 5m",d:5,pool:1,an:"TL XX"},
-    {k:"S",l:"S 5m TL",d:5,pool:1,an:"TL X"},
+    {k:"J",l:"J 2m",d:2,pool:"d"},
+    {k:"R",l:"R5 9m",d:9,pool:"d",an:"TR XX"},
+    {k:"R",l:"R6 5m",d:5,pool:"s",an:"TL XX"},
+    {k:"S",l:"S 5m TL",d:5,pool:"d",an:"TL X"},
     {k:"N",l:"Ideal lunch spot"},
-    {k:"R",l:"R7 或 J 6m",d:6,pool:1,an:"TL XX"},
-    {k:"R",l:"R8 5m",d:5,pool:1,an:"XX TR"},
-    {k:"R",l:"R9 6m",d:6,pool:1,an:"TR XX"},
+    {k:"R",l:"R7 或 J 6m",d:6,pool:"d",an:"TL XX"},
+    {k:"R",l:"R8 5m",d:5,pool:"d",an:"XX TR"},
+    {k:"R",l:"R9 6m",d:6,pool:"s",an:"TR XX"},
     {k:"N",l:"Arch"},
-    {k:"DC",l:"DC 2m",d:2,pool:1},
-    {k:"S",l:"S 5m TL",d:5,pool:1},
+    {k:"DC",l:"DC 2m",d:2,pool:"s"},
+    {k:"S",l:"S 5m TL",d:5,pool:"d"},
     {k:"R",l:"R10 12m",d:12,an:"TR XX",run:16},
-    {k:"J",l:"J 3m",d:3,pool:1}
+    {k:"J",l:"J 3m",d:3,pool:"d"}
   ]},
   {nm:"Lower section",ab:["C",""],desc:"從 Gangers Creek 匯流處開始，連續小跳水直到 SH6 橋下的最後一跳。逃生點最多。",f:[
-    {k:"S",l:"S 3m! 或 DC 3m",d:3,pool:1,an:"TR X"},
-    {k:"J",l:"TL J 2m!",d:2,pool:1},
-    {k:"J",l:"TR J 2m",d:2,pool:1},
-    {k:"J",l:"J 5m",d:5,pool:1,an:"TL X"},
+    {k:"S",l:"S 3m! 或 DC 3m",d:3,pool:"s",an:"TR X"},
+    {k:"J",l:"TL J 2m!",d:2,pool:"d"},
+    {k:"J",l:"TR J 2m",d:2,pool:"d"},
+    {k:"J",l:"J 5m",d:5,pool:"d",an:"TL X"},
     {k:"N",l:"SH6 Bridge"},
-    {k:"J",l:"J 3m! 或 DC TR",d:3,pool:1}
+    {k:"J",l:"J 3m! 或 DC TR",d:3,pool:"d"}
   ]}
 ];
 const WILSON_TOPO=[
-  {nm:"入溪 → A",ab:["","A"],desc:"下切抵溪後往下游走 5 分鐘峽谷才開始；R2 17 m 是全線最大落差，之後進入亂石段。",f:[
+  {nm:"入溪 → A",ab:["","A"],desc:"下切抵溪後往下游走 5 分鐘峽谷才開始；R2 17 m 是全線最大落差，之後進入亂石段。A 的落水潭會形成危險 hydraulic。",f:[
     {k:"N",l:"入溪後往下游 5 mins"},
-    {k:"R",l:"R1 8m",d:8,pool:1,an:"TR X X"},
-    {k:"DC",l:"DC 3m TL",d:3,pool:1},
+    {k:"R",l:"R1 8m",d:8,pool:"d",an:"TR X X"},
+    {k:"DC",l:"DC 3m TL",d:3,pool:"h"},
     {k:"N",l:"TR 注意"},
-    {k:"R",l:"R2 17m",d:17,pool:1,an:"TL XX"},
-    {k:"DC",l:"DC !",d:3,pool:1},
-    {k:"J",l:"J 3m",d:3,pool:1,an:"TL XX"},
+    {k:"R",l:"R2 17m",d:17,pool:"d",an:"TL X X"},
+    {k:"DC",l:"DC !",d:3,pool:"s"},
+    {k:"J",l:"J 3m",d:3,an:"TL XX"},
     {k:"HL",l:"HL 8m",d:0,an:"TR X X · X · X X"},
-    {k:"R",l:"R3 10m",d:10,pool:1}
+    {k:"R",l:"R3 10m",d:10,pool:"h"}
   ]},
   {nm:"A → B",ab:["A","B"],desc:"最危險的一段：The Julie Pool 的強力 hydraulic、the rock fall 逃生點、R5 落水潭的 The Boil。",f:[
-    {k:"DC",l:"DC",d:2,pool:1},
+    {k:"DC",l:"DC",d:2,pool:"h"},
     {k:"N",l:"\u201cThe Julie Pool\u201d"},
     {k:"N",l:"\u201cThe rock fall\u201d 逃生點"},
-    {k:"R",l:"R4 12m",d:12,pool:1,an:"TR XX"},
-    {k:"J",l:"J 5m",d:5,an:"TR XX"},
-    {k:"R",l:"R5 6m",d:6,pool:1},
+    {k:"R",l:"R4 12m",d:12,pool:"d",an:"TR X X"},
+    {k:"J",l:"J 5m",d:5,an:"替代路線"},
+    {k:"R",l:"R5 6m",d:6,pool:"h",an:"TR XX"},
     {k:"N",l:"\u201cThe Boil\u201d"},
-    {k:"N",l:"\u201cStar Wars Alley\u201d"},
-    {k:"R",l:"R6 9m",d:9,pool:1,an:"TR XX"},
+    {k:"N",l:"\u201cStar Wars Alley\u201d 長潭"},
+    {k:"R",l:"R6 9m",d:9,pool:"s",an:"TR X X"},
     {k:"N",l:"\u201cThe Zig Zag\u201d"}
   ]},
   {nm:"B → 出溪",ab:["B",""],desc:"通過 The Blue Pot 後地形逐漸放緩，R9 之後接 DC 6 m 出到 SH6 橋邊。",f:[
     {k:"J",l:"J 5m",d:5,an:"XX"},
-    {k:"R",l:"R7 或 J 10m",d:10,pool:1,an:"TR XX"},
+    {k:"R",l:"R7 或 J 10m",d:10,pool:"d",an:"TR XX"},
     {k:"N",l:"\u201cThe Blue Pot\u201d"},
-    {k:"DC",l:"DC 2m",d:2,pool:1},
-    {k:"J",l:"J 3m",d:3,pool:1},
+    {k:"DC",l:"DC 2m",d:2,pool:"s"},
+    {k:"J",l:"J 3m",d:3,pool:"d"},
     {k:"DC",l:"DC",d:2},
-    {k:"R",l:"R8 4m",d:4,an:"TL XX"},
-    {k:"R",l:"R9 12m",d:12,pool:1,an:"TL XX"},
-    {k:"DC",l:"DC 6m",d:6,pool:1}
+    {k:"R",l:"R8 4m",d:4,an:"TL X X"},
+    {k:"R",l:"R9 12m",d:12,an:"TL X X"},
+    {k:"DC",l:"DC 6m",d:6,pool:"d"}
   ]}
 ];
 const WHIO_TOPO=[
   {nm:"大瀑布底 → A",ab:["","A"],desc:"從大瀑布底開始，跳水與滑瀑相當密集，落差都不算大。",f:[
-    {k:"S",l:"S 15m 或 J 15m",d:15,pool:1,an:"TL X"},
-    {k:"J",l:"J 8m",d:8,pool:1,an:"TR 逃生"},
-    {k:"R",l:"R1 12m",d:12,pool:1,an:"TR X"},
-    {k:"R",l:"R2 9m",d:9,pool:1,an:"TR X"},
-    {k:"S",l:"S 10m",d:10,pool:1,an:"TL X"},
-    {k:"J",l:"J 12m 或 S 12m",d:12,pool:1,an:"TR X"}
+    {k:"S",l:"S 15m 或 J 15m",d:15,pool:"u",an:"TL X"},
+    {k:"J",l:"J 8m",d:8,pool:"u",an:"TR 逃生"},
+    {k:"R",l:"R1 12m",d:12,pool:"u",an:"TR X"},
+    {k:"R",l:"R2 9m",d:9,pool:"u",an:"TR X"},
+    {k:"S",l:"S 10m",d:10,pool:"u",an:"TL X"},
+    {k:"J",l:"J 12m 或 S 12m",d:12,pool:"u",an:"TR X"}
   ]},
   {nm:"A → 出溪",ab:["A",""],desc:"R4 20 m 是全線最大落差，需向右盪出越過邊緣以避開 undercut。",f:[
-    {k:"R",l:"R3 8m",d:8,pool:1,an:"TR X"},
-    {k:"R",l:"R4 20m",d:20,pool:1,an:"TR TL XX"},
+    {k:"R",l:"R3 8m",d:8,pool:"u",an:"TR X"},
+    {k:"R",l:"R4 20m",d:20,pool:"u",an:"TR TL XX"},
     {k:"N",l:"undercut 注意"},
-    {k:"R",l:"R5 5m",d:5,pool:1,an:"TL X"},
-    {k:"J",l:"J 10m",d:10,pool:1},
-    {k:"J",l:"J 10m 或 S 10m",d:10,pool:1}
+    {k:"R",l:"R5 5m",d:5,pool:"u",an:"TL X"},
+    {k:"J",l:"J 10m",d:10,pool:"u"},
+    {k:"J",l:"J 10m 或 S 10m",d:10,pool:"u"}
+  ]}
+];
+const MAYHEM_TOPO=[
+  {nm:"入溪 1400 m → A",ab:["","A"],desc:"樹線之上的草叢地形開始，一路是大落差垂降，R4 45 m 之後有第一個逃生點。",f:[
+    {k:"N",l:"Entry 1400m"},
+    {k:"HL",l:"HL 5m",d:0,an:"綠 ✗ CL"},
+    {k:"R",l:"R1 20m",d:20,pool:"u",an:"✗ CL"},
+    {k:"R",l:"R2 30m",d:30,pool:"u",an:"✗ CL"},
+    {k:"DC",l:"DC 2m",d:2},
+    {k:"R",l:"R3 7m",d:7,pool:"u",an:"✗ CL"},
+    {k:"DC",l:"DC 4m",d:4},
+    {k:"R",l:"R4 45m",d:45,pool:"u",an:"✗ CL"},
+    {k:"DC",l:"DC 4m",d:4},
+    {k:"N",l:"Escape（CR 或 CL）"}
+  ]},
+  {nm:"A → B（Money Shot Falls）",ab:["A","B"],desc:"R8 60 m 與 R9 35 m 合計 95 m 的連續大瀑布；R8 頂端有落石，R9 是位於 R8 下方 60 m 的懸吊確保站。",f:[
+    {k:"R",l:"R5 35m",d:35,pool:"u",an:"✗ CL"},
+    {k:"R",l:"R6 4m",d:4,pool:"u",an:"✗ CL"},
+    {k:"DC",l:"DC 2m",d:2},
+    {k:"R",l:"R7 10m",d:10,pool:"u",an:"✗ CL"},
+    {k:"N",l:"Money Shot Falls · 落石"},
+    {k:"R",l:"R8 60m",d:60,an:"✗✗ CL"},
+    {k:"R",l:"R9 35m",d:35,pool:"u",an:"✗✗ CR 懸吊"},
+    {k:"N",l:"South Branch 匯入（CL）"},
+    {k:"DC",l:"DC 2m",d:2},
+    {k:"DC",l:"DC 2m",d:2},
+    {k:"N",l:"Escape（CL）"},
+    {k:"R",l:"R10 7m",d:7,pool:"u",an:"✗ CL"}
+  ]},
+  {nm:"B → D",ab:["B","D"],desc:"R14 35 m 之後進入 Green Corner，接連 R16–R18 的連續大落差，R18 45 m 底下有逃生點。",f:[
+    {k:"R",l:"R11 10m",d:10,pool:"u",an:"✗ CL"},
+    {k:"R",l:"R12 10m",d:10,pool:"u",an:"✗ CL"},
+    {k:"R",l:"R13 10m",d:10,pool:"u",an:"樹錨 CL"},
+    {k:"R",l:"R14 35m",d:35,pool:"u",an:"✗✗ CL"},
+    {k:"DC",l:"DC 2m",d:2},
+    {k:"R",l:"R15 5m",d:5,pool:"u",an:"✗ CL"},
+    {k:"N",l:"Green Corner（CR 支流）"},
+    {k:"R",l:"R16 15m",d:15,pool:"u",an:"✗ CL"},
+    {k:"R",l:"R17 25m",d:25,pool:"u",an:"✗ CL"},
+    {k:"R",l:"R18 45m",d:45,pool:"u",an:"✗✗ CL"},
+    {k:"N",l:"Escape（CL）"}
+  ]},
+  {nm:"D → F（800 m 入口）",ab:["D","F"],desc:"下段入口在這一段：800 m 由碎石坡下切至 R21 之後。R25 進入 4th Chamber 後直到 Happy Place 無法脫離。",f:[
+    {k:"DC",l:"DC 2m",d:2},
+    {k:"R",l:"R19 5m",d:5,pool:"u",an:"✗ CL"},
+    {k:"HL",l:"HL 5m",d:0,an:"綠 ✗ CL"},
+    {k:"R",l:"R20 15m",d:15,pool:"u",an:"✗ CL"},
+    {k:"DC",l:"DC 2m",d:2},
+    {k:"N",l:"Escape（CR）"},
+    {k:"DC",l:"DC 2m",d:2},
+    {k:"N",l:"100 m 非技術段"},
+    {k:"R",l:"R21 8m",d:8,pool:"u",an:"✗ CL"},
+    {k:"DC",l:"DC 2m",d:2},
+    {k:"N",l:"800 m 入口下切 50 m DC"},
+    {k:"DC",l:"多個 DC",d:4},
+    {k:"R",l:"R22 10m",d:10,pool:"u",an:"樹錨 CL"},
+    {k:"R",l:"R23 15m",d:15,pool:"u",an:"✗ CL · Dev CL"},
+    {k:"N",l:"Escape（CR）"},
+    {k:"R",l:"R24 3m",d:3,pool:"u",an:"倒木錨 C"},
+    {k:"DC",l:"多個 DC",d:4},
+    {k:"R",l:"R25 15m",d:15,pool:"u",an:"✗ CL"},
+    {k:"N",l:"Enter the 4th Chamber"},
+    {k:"DC",l:"DC 2m",d:2}
+  ]},
+  {nm:"F → 出溪 460 m（下段窄縫）",ab:["F",""],desc:"從 Chucky's Falls 開始的連續窄縫，幾乎每個瀑布底下都有倒木壩與假底；經 Happy Place、The Narrows、S Bends 到 Exit Narrows。",f:[
+    {k:"R",l:"R26 15m",d:15,pool:"u",an:"✗ CL · Chucky's Falls"},
+    {k:"N",l:"Sweet as corridor"},
+    {k:"R",l:"R27 7m",d:7,pool:"u",an:"✗ CL"},
+    {k:"DC",l:"多個 DC",d:4},
+    {k:"R",l:"R28 4m",d:4,pool:"u",an:"✗ CL"},
+    {k:"R",l:"R29 6m",d:6,pool:"u",an:"✗ CL"},
+    {k:"R",l:"R30 12m",d:12,pool:"u",an:"✗ CL"},
+    {k:"R",l:"R31 15m",d:15,pool:"u",an:"✗ CL"},
+    {k:"R",l:"R32 6m",d:6,pool:"u",an:"✗ CL"},
+    {k:"R",l:"R33 3m",d:3,pool:"u",an:"倒木錨 C"},
+    {k:"R",l:"R34 2m",d:2,pool:"u",an:"✗ CL"},
+    {k:"N",l:"600 m The Happy Place 入口"},
+    {k:"R",l:"R35 10m",d:10,pool:"u",an:"✗ CL"},
+    {k:"R",l:"R36 10m",d:10,pool:"u",an:"✗ CR"},
+    {k:"R",l:"R37 12m",d:12,pool:"u",an:"✗ CL"},
+    {k:"R",l:"R38 6m",d:6,pool:"u",an:"✗ CR"},
+    {k:"N",l:"Escape（CR）"},
+    {k:"DC",l:"DC 3m",d:3},
+    {k:"R",l:"R39 8m",d:8,pool:"u",an:"✗ CR · The Narrows"},
+    {k:"DC",l:"多個 DC",d:4},
+    {k:"R",l:"R40 8m",d:8,pool:"u",an:"✗ CR"},
+    {k:"DC",l:"多個 DC · The S Bends",d:4},
+    {k:"N",l:"250 m 非技術段"},
+    {k:"DC",l:"DC 2m",d:2},
+    {k:"R",l:"R41 6m",d:6,pool:"u",an:"✗ CR · The Exit Narrows"},
+    {k:"DC",l:"DC 2m",d:2},
+    {k:"N",l:"460 m 水位檢查點"}
   ]}
 ];
 function renderAllTopos(){
@@ -2022,6 +2262,7 @@ function renderAllTopos(){
   renderTopo("#topo-cross",CROSS_TOPO);
   renderTopo("#topo-wilson",WILSON_TOPO);
   renderTopo("#topo-whio",WHIO_TOPO);
+  renderTopo("#topo-mayhem",MAYHEM_TOPO);
 }
 
 /* pane order follows the tab strip: 進場路線 → 原始路線圖 → 代表照片 → 風險注意 */
