@@ -1,4 +1,11 @@
-<title>Haast Pass 溪降路線檔案</title>
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="紐西蘭南島六條溪降路線的資料庫介面：地形圖、GPS 點位、縱剖面與風險資訊。資料來源 KiwiCanyons。">
+<title>紐西蘭溪降路線檔案</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&display=swap">
@@ -30,6 +37,8 @@
   --sw:296px;
 }
 *{box-sizing:border-box}
+img{max-width:100%}
+[hidden]{display:none!important}
 body{
   margin:0;background:var(--ground);color:var(--text);
   font-family:var(--sans);font-size:14px;line-height:1.6;
@@ -410,6 +419,7 @@ details.tbl th:first-child,details.tbl td:first-child{text-align:left}
 .fcday .p .i{width:13px;height:13px;color:var(--s2,#c98500)}
 
 
+.mtop,.mnav{display:none}
 a.btn{text-decoration:none;color:var(--text)}
 .mapnote{position:absolute;left:50%;top:18px;transform:translateX(-50%);z-index:900;padding:7px 13px;font-size:12.5px;color:var(--muted)}
 .mapnote[hidden]{display:none!important}
@@ -501,22 +511,72 @@ a.btn{text-decoration:none;color:var(--text)}
 .fitbtn .i{width:15px;height:15px;color:var(--water)}
 
 @media (max-width:980px){
+  /* app 式版面：頂部列 + 單一內容區 + 底部切換列，整頁不捲動 */
+  body{display:flex;flex-direction:column;height:100dvh;overflow:hidden}
+  .mtop{
+    display:flex;align-items:center;gap:10px;flex:none;
+    padding:10px 14px calc(10px) 14px;padding-top:calc(10px + env(safe-area-inset-top));
+    background:var(--panel);border-bottom:1px solid var(--line);
+  }
+  .mtop .mark{width:30px;height:30px}
+  .mtop .mark .i{width:18px;height:18px}
+  .mtitle{font-family:var(--cond);font-weight:700;font-size:18px;letter-spacing:.01em;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mnav{
+    display:grid;grid-template-columns:repeat(3,1fr);flex:none;
+    background:var(--panel);border-top:1px solid var(--line);
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  .mnav button{
+    display:flex;flex-direction:column;align-items:center;gap:3px;
+    padding:9px 0 8px;font-size:11.5px;color:var(--dim);
+  }
+  .mnav button .i{width:20px;height:20px}
+  .mnav button[aria-selected="true"]{color:var(--water-2)}
+  .mnav button[aria-selected="true"] .i{color:var(--water)}
+
+  .shell{flex:1;min-height:0;flex-direction:column;height:auto;overflow:hidden}
   :root{--pw:100%}
-  .shell{flex-direction:column;height:auto;overflow:visible}
-  .side{position:static;width:100%;transform:none;box-shadow:none;border-right:0;border-bottom:1px solid var(--line)}
-  .side.collapsed{transform:none}
-  .map{--dw:0px}
-  .routes{max-height:186px;padding-bottom:0}
-  .map{height:44vh;min-height:280px;flex:none}
-  .panel{width:100%;border-left:0;border-top:1px solid var(--line)}
-  .panes{overflow-y:visible;padding-bottom:36px}
   .grip{display:none}
-  .settings{bottom:80px}
+
+  /* 三個檢視共用整個內容區，一次只顯示一個 */
+  .side{
+    position:static;width:100%;height:100%;transform:none;box-shadow:none;
+    border-right:0;border-bottom:0;
+  }
+  .side.collapsed{transform:none}
+  .side-top{display:none}
+  .sideopen,.p-close{display:none}
+  .routes{max-height:none;padding-bottom:8px}
+  .map{--dw:0px;height:100%;min-height:0;flex:1}
+  .panel{width:100%;height:100%;border-left:0;border-top:0}
+  .panes{overflow-y:auto;padding:16px 16px 24px}
+  .p-head{padding:14px 16px 0}
+  body[data-mview="list"] .map,body[data-mview="list"] .panel{display:none}
+  body[data-mview="map"]  .side,body[data-mview="map"]  .panel{display:none}
+  body[data-mview="info"] .side,body[data-mview="info"] .map{display:none}
+
+  /* 地圖控制項改到拇指可及的右下，底圖選單留在左上 */
+  .map-ui{top:12px;left:12px;right:auto}
+  .layers-pop{right:auto;left:12px;top:58px}
+  .zoomer{top:auto;bottom:100px;right:12px}
+  .fitbtn{top:auto;bottom:26px;right:12px}
+  .scalebar{bottom:26px;left:12px}
+  .coords{bottom:66px;left:12px}
+  .mapnote{top:58px;font-size:12px;max-width:calc(100% - 24px);text-align:center}
+  .leaflet-control-attribution{font-size:9.5px;max-width:100%;white-space:nowrap}
+
+  .tabs{padding:0 16px 10px}
+  .row{grid-template-columns:72px 1fr;gap:10px}
+  .tiles{grid-template-columns:1fr 1fr}
+  .fcday{grid-template-columns:58px 1fr auto}
 }
 @media (prefers-reduced-motion:reduce){
   *{transition-duration:.01ms!important;animation-duration:.01ms!important}
 }
 </style>
+</head>
+<body>
 
 <svg class="sprite" aria-hidden="true">
   <symbol id="ic-pin" viewBox="0 0 24 24"><path d="M12 21.5s7-6.4 7-11.5a7 7 0 1 0-14 0c0 5.1 7 11.5 7 11.5Z"/><circle cx="12" cy="10" r="2.6"/></symbol>
@@ -545,12 +605,17 @@ a.btn{text-decoration:none;color:var(--text)}
   <symbol id="ic-route" viewBox="0 0 24 24"><path d="M6.5 20.5c0-4 3.6-4 3.6-8.5S6.5 8 6.5 3.5"/><path d="M17.5 3.5c0 4.5-3.6 4-3.6 8.5s3.6 4.5 3.6 8.5"/></symbol>
   <symbol id="ic-rain" viewBox="0 0 24 24"><path d="M7.4 15.6a4.4 4.4 0 0 1 .5-8.8 5.4 5.4 0 0 1 10.3 1.5 3.7 3.7 0 0 1-.7 7.3z"/><path d="M8.6 18.4 7.8 20.6M12.4 18.4l-.8 2.2M16.2 18.4l-.8 2.2"/></symbol>
   <symbol id="ic-gauge" viewBox="0 0 24 24"><path d="M3.6 17.4a8.6 8.6 0 1 1 16.8 0"/><path d="M12 17.4 15.8 11"/></symbol>
+  <symbol id="ic-list" viewBox="0 0 24 24"><path d="M4 6.5h16M4 12h16M4 17.5h16"/></symbol>
   <symbol id="ic-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
   <symbol id="ic-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
   <symbol id="ic-fit" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol>
   <symbol id="ic-canyon" viewBox="0 0 24 24"><path d="M4 3.5v7.8L8.4 20M20 3.5v7.8L15.6 20"/><path d="M8.4 20h7.2"/></symbol>
 </svg>
 
+<div class="mtop" id="mtop">
+  <span class="mark"><svg class="i"><use href="#ic-canyon"/></svg></span>
+  <span class="mtitle" id="m-title">紐西蘭溪降路線</span>
+</div>
 <div class="shell">
   <!-- ============ sidebar ============ -->
   <aside class="side">
@@ -1456,6 +1521,12 @@ a.btn{text-decoration:none;color:var(--text)}
   </section>
 </div>
 
+<nav class="mnav" id="mnav" aria-label="檢視切換">
+  <button type="button" data-mv="list"><svg class="i"><use href="#ic-list"/></svg>清單</button>
+  <button type="button" data-mv="map"><svg class="i"><use href="#ic-map"/></svg>地圖</button>
+  <button type="button" data-mv="info" aria-selected="true"><svg class="i"><use href="#ic-info"/></svg>資料</button>
+</nav>
+
 <div class="toast" id="toast" hidden></div>
 
 <script>
@@ -1539,6 +1610,7 @@ function select(id){
   }
   renderList($("#q").value);
   panes.scrollTop=0;
+  if(MQ.matches)setMView("info"); else $("#m-title").textContent=r.nm;
 }
 
 /* ---------------- tabs ---------------- */
@@ -1630,15 +1702,15 @@ const NZ=[[-47.4,166.3],[-34.3,178.7]];
 const BASEMAPS={
   topo:{name:"地形圖",url:"https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
         opt:{maxZoom:17,subdomains:"abc",
-             attribution:'地形圖 &copy; <a href="https://opentopomap.org/">OpenTopoMap</a>（<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>）· 資料 &copy; OpenStreetMap contributors · SRTM'}},
+             attribution:'&copy; <a href="https://opentopomap.org/">OpenTopoMap</a>（<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>）· &copy; OSM · SRTM'}},
   sat:{name:"衛星影像",url:"https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-        opt:{maxZoom:18,attribution:'影像 &copy; Esri, Maxar, Earthstar Geographics'}},
+        opt:{maxZoom:18,attribution:'&copy; Esri · Maxar'}},
   osm:{name:"街道圖",url:"https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-        opt:{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}}
+        opt:{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors'}}
 };
 const map=L.map("lmap",{zoomControl:false,attributionControl:false,minZoom:5,maxZoom:18,
   zoomSnap:.25,worldCopyJump:false});
-L.control.attribution({position:"bottomright",prefix:'座標：KiwiCanyons 官方 topo'}).addTo(map);
+L.control.attribution({position:"bottomright",prefix:'座標 KiwiCanyons'}).addTo(map);
 map.fitBounds(NZ);
 let baseLayer=null;
 function setBasemap(key){
@@ -2275,10 +2347,32 @@ function renderAllTopos(){
   });
 })();
 
+
+/* ---------------- 手機版檢視切換 ---------------- */
+const MQ=window.matchMedia("(max-width:980px)");
+const navBtns=$$("#mnav button");
+function setMView(v){
+  document.body.dataset.mview=v;
+  navBtns.forEach(b=>b.setAttribute("aria-selected",String(b.dataset.mv===v)));
+  const r=ROUTES.find(x=>x.id===current);
+  $("#m-title").textContent=(v==="list"||!r)?"紐西蘭溪降路線":r.nm;
+  if(v==="map")setTimeout(()=>{map.invalidateSize();reflow();updChrome()},60);
+  if(v==="info")panes.scrollTop=0;
+}
+navBtns.forEach(b=>b.addEventListener("click",()=>setMView(b.dataset.mv)));
+function syncMobile(){
+  if(MQ.matches){ if(!document.body.dataset.mview)setMView("info"); }
+  else { delete document.body.dataset.mview; }
+  setTimeout(()=>map.invalidateSize(),60);
+}
+MQ.addEventListener("change",syncMobile);
+
 /* ---------------- init ---------------- */
-renderAllTopos(); renderWeather(); drawMap(); select("cross");
+renderAllTopos(); renderWeather(); drawMap(); select("cross"); syncMobile();
 let rt;
 window.addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(drawMap,140)});
 document.fonts&&document.fonts.ready.then(renderAllTopos);
 })();
 </script>
+</body>
+</html>
