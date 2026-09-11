@@ -1615,7 +1615,15 @@ function select(id){
 
 /* ---------------- tabs ---------------- */
 const tabs=$$(".tab");
-function activate(i){
+const REDUCED=window.matchMedia("(prefers-reduced-motion: reduce)");
+function centreTab(el,smooth){
+  const wrap=$(".tabs");
+  const wr=wrap.getBoundingClientRect(), er=el.getBoundingClientRect();
+  const delta=(er.left+er.width/2)-(wr.left+wr.width/2);
+  if(Math.abs(delta)<1)return;
+  wrap.scrollTo({left:wrap.scrollLeft+delta,behavior:(smooth&&!REDUCED.matches)?"smooth":"auto"});
+}
+function activate(i,smooth){
   const group=$('.rpanes[data-route="'+current+'"]');
   if(!group)return;
   const ps=group.querySelectorAll(".pane");
@@ -1625,18 +1633,18 @@ function activate(i){
     t.tabIndex=on?0:-1;
     if(ps[j])ps[j].hidden=!on;
   });
-  tabs[i].scrollIntoView({block:"nearest",inline:"center"});
+  centreTab(tabs[i],smooth);
   panes.scrollTop=0;
   renderGalleries();
 }
 tabs.forEach((t,i)=>{
-  t.addEventListener("click",()=>activate(i));
+  t.addEventListener("click",()=>activate(i,true));
   t.addEventListener("keydown",e=>{
     const d=e.key==="ArrowRight"?1:e.key==="ArrowLeft"?-1:0;
     if(!d)return;
     e.preventDefault();
     const n=(i+d+tabs.length)%tabs.length;
-    activate(n); tabs[n].focus();
+    activate(n,true); tabs[n].focus();
   });
 });
 
@@ -2046,7 +2054,7 @@ function renderWeather(){
     table($('[data-table="rn"]'),["日期","日雨量 mm","累積 mm"],WX.rn.map((v,i)=>[WX.rnD[i],v,cum[i]]));
   }
 }
-$$("[data-goto]").forEach(b=>b.addEventListener("click",()=>activate(+b.dataset.goto-1)));
+$$("[data-goto]").forEach(b=>b.addEventListener("click",()=>activate(+b.dataset.goto-1,true)));
 
 
 /* ---------------- photo galleries ---------------- */
